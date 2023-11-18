@@ -9,10 +9,6 @@
 #include "common.h"
 #include "file.h"
 
-#define CHECK(X) ({int __val = (X); (__val == -1 ? \
-  ({fprintf(stderr,"ERROR ("__FILE__":%d) -- %s\n",__LINE__, strerror(errno)); \
-  return STATUS_ERROR;}) : __val); })
-
 int create_db_file(const char *filename)
 {
   int fd = open(filename, O_RDWR);
@@ -23,13 +19,13 @@ int create_db_file(const char *filename)
     return STATUS_ERROR;
   }
   fd = open(filename, O_RDWR | O_CREAT, 0644);
-  CHECK(fd);
+  CHECK(fd, strerror(errno));
   return fd;
 }
 
 int open_db_file(const char *filename)
 {
   int fd = open(filename, O_RDWR, 0644);
-  CHECK(fd);
+  CHECK(fd, strerror(errno));
   return fd;
 }

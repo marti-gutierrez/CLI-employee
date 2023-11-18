@@ -8,10 +8,6 @@
 #include <stdbool.h>
 #include <getopt.h>
 
-#define CHECK(X) ({int __val = (X); (__val == -1 ? \
-  ({fprintf(stderr,"ERROR ("__FILE__":%d) -- Unable to create database file\n",__LINE__); \
-  exit(-1);-1;}) : __val); })
-
 void printf_usage(char *argv[])
 {
   printf("Usage: %s -n -f <database file>\n", argv[0]);
@@ -52,14 +48,14 @@ int main(int argc, char **argv)
   if (newFile)
   {
     dbfd = create_db_file(filepath);
-    CHECK(dbfd);
-    CHECK(create_db_header(dbfd, &dbhdr));
+    CHECK(dbfd, "Unable to create DB file");
+    CHECK(create_db_header(dbfd, &dbhdr), "Unable to create DB header");
   }
   else
   {
     dbfd = open_db_file(filepath);
-    CHECK(dbfd);
-    CHECK(validate_db_header(dbfd, &dbhdr));
+    CHECK(dbfd, "Unable to create DB file");
+    CHECK(validate_db_header(dbfd, &dbhdr), "Unable to create DB header");
   }
 
   output_file(dbfd, dbhdr);
