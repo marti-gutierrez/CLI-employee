@@ -1,10 +1,17 @@
 # CLI database
 
-El CLI trabajara como un CRUD, algunas de otros flags disponibles son:
+El CLI permite realizar operaciones de CRUD (Create,Read, Update y Delete) en un datafile 
+`*.db` el cual almacena la estructura de datos Employee, cada employee tiene los campos: nombre,Dirección y horas de trabajo.
+Estos datos se guardan en el archivo para cargar y editarlos.
 
+## Flags
+
+Los flags para operar el CLI son los siguientes:
+
+- `-f` (File name) 
 - `-n` (New File) para crear un data file `./db-cli -f ./data.db -n`
-- `-f ./my-db.db` (File name) Si existe un archivo enviamos un `char *str = "./db.db"` 
 
+## Structure of project
 La estructura del proyecto es la siguiente:
 
 - bin/
