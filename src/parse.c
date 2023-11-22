@@ -130,10 +130,10 @@ void output_file(int fd, struct dbheader_t *dbhdr, struct employee_t *employees)
     exit(-1);
   }
   unsigned short realcount = dbhdr->count;
-  dbhdr->version = ntohs(dbhdr->version);
-  dbhdr->count = ntohs(dbhdr->count);
-  dbhdr->magic = ntohl(dbhdr->magic);
-  dbhdr->filesize = ntohl(sizeof(struct dbheader_t) + realcount * sizeof(struct employee_t));
+  dbhdr->magic = htonl(dbhdr->magic);
+  dbhdr->filesize = htonl(sizeof(struct dbheader_t) + realcount * sizeof(struct employee_t));
+  dbhdr->count = htons(dbhdr->count);
+  dbhdr->version = htons(dbhdr->version);
   lseek(fd, 0, SEEK_SET);
   write(fd, dbhdr, sizeof(struct dbheader_t));
 
