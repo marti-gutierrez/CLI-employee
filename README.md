@@ -8,8 +8,10 @@ Estos datos se guardan en el archivo para cargar y editarlos.
 
 Los flags para operar el CLI son los siguientes:
 
-- `-f` (File name) 
-- `-n` (New File) para crear un data file `./db-cli -f ./data.db -n`
+- `-f` (File name) necesita el path o el nombre del archivo *.db* `./data.db` 
+- `-n` (New File)
+- `-a` (Add file) necesita un string con nombre,direccion y horas de trabajo separadas por una coma`"Martin G.H, street view 28, 23"` 
+- `-l` (list employee)
 
 ## Structure of project
 La estructura del proyecto es la siguiente:
