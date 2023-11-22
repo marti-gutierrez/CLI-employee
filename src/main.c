@@ -19,10 +19,13 @@ int main(int argc, char **argv)
 {
   int opt = 0;
   struct dbheader_t *dbhdr = NULL;
+  struct employee_t *employees = NULL;
   int dbfd = -1;
   char *filepath = NULL;
+  char *addString = NULL;
   bool newFile = false;
-  while ((opt = getopt(argc, argv, "nf:")) != -1)
+  bool list = false;
+  while ((opt = getopt(argc, argv, "nf:a:l")) != -1)
   {
     switch (opt)
     {
@@ -31,6 +34,12 @@ int main(int argc, char **argv)
       break;
     case 'f':
       filepath = optarg;
+      break;
+    case 'a':
+      addString = optarg;
+      break;
+    case 'l':
+      list = true;
       break;
     case '?':
       printf("Unknown option -%c\n", opt);
@@ -57,7 +66,15 @@ int main(int argc, char **argv)
     CHECK(dbfd, "Unable to create DB file");
     CHECK(validate_db_header(dbfd, &dbhdr), "Unable to create DB header");
   }
-
-  output_file(dbfd, dbhdr);
+  CHECK(read_employess(dbfd, dbhdr, &employees), "Failed to read employees");
+  if (addString)
+  {
+    dbhdr->count++;
+    employees = realloc(employees, dbhdr->count * sizeof(struct employee_t));
+    add_employee(dbhdr, employees, addString);
+  }
+  if (list)
+    list_employees(dbhdr, employees);
+  output_file(dbfd, dbhdr, employees);
   return 0;
 }
